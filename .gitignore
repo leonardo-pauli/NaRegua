@@ -43,3 +43,16 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Segurança - Credenciais e configs sensíveis
+.env
+.env.*
+!.env.example
+**/google-services.json
+**/GoogleService-Info.plist
+**/firebase_options.dart
+
+# Generated files
+*.config.dart
+*.g.dart
+*.freezed.dart

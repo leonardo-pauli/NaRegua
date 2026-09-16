@@ -1,5 +1,5 @@
 name: barber_flow
-description: "A new Flutter project."
+description: "App de agendamento de barbearias"
 publish_to: 'none'
 version: 0.1.0+1
 
@@ -10,10 +10,38 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # State Management
+  flutter_bloc: ^9.1.1
+  equatable: ^3.0.0
+
+  # Dependency Injection
+  get_it: ^9.2.1
+  injectable: ^2.5.0
+
+  # Functional Programming
+  fpdart: ^1.2.0
+
+  # Environment Variables
+  flutter_dotenv: ^6.0.1
+
+  # Firebase
+  firebase_core: ^4.15.0
+  firebase_auth: ^6.7.0
+  cloud_firestore: ^6.10.0
+
+  # Google Sign In
+  google_sign_in: ^7.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
 
+  # DI Code Generation
+  injectable_generator: ^2.6.3
+  build_runner: ^2.4.15
+
 flutter:
   uses-material-design: true
+  assets:
+    - .env
