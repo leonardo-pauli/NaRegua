@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:barber_flow/features/auth/presentation/pages/login_page.dart';
+import 'package:barber_flow/features/auth/presentation/pages/register_page.dart';
 
 class AppRouter {
   AppRouter._();
@@ -6,11 +8,16 @@ class AppRouter {
   // Route names
   static const String splash = '/';
   static const String login = '/login';
+  static const String register = '/register';
   static const String home = '/home';
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
-      // Rotas serão adicionadas conforme features forem implementadas
+      case login:
+        return MaterialPageRoute(builder: (_) => const LoginPage());
+      case register:
+        return MaterialPageRoute(builder: (_) => const RegisterPage());
+      // Outras rotas serão adicionadas conforme features forem implementadas
       default:
         return MaterialPageRoute(
           builder: (_) => const Scaffold(
