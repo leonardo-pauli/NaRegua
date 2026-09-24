@@ -133,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: () {
-                  // TODO: Tela de recuperar senha
+                  Navigator.pushNamed(context, AppRouter.forgotPassword);
                 },
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.primaryOrange,
