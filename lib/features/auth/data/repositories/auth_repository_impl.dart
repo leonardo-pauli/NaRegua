@@ -19,7 +19,55 @@ class AuthRepositoryImpl implements AuthRepository {
       final user = await _remoteDataSource.signInWithGoogle();
       return Right(user);
     } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
+      return Left(AuthFailure(e.message));
+    } catch (e) {
+      return Left(AuthFailure('Erro inesperado: $e'));
+    }
+  }
+
+  @override
+  FutureEither<UserEntity> signInWithEmail(String email, String password) async {
+    try {
+      final user = await _remoteDataSource.signInWithEmail(email, password);
+      return Right(user);
+    } on ServerException catch (e) {
+      return Left(AuthFailure(e.message));
+    } catch (e) {
+      return Left(AuthFailure('Erro inesperado: $e'));
+    }
+  }
+
+  @override
+  FutureEither<UserEntity> signUpWithEmail(String name, String email, String password) async {
+    try {
+      final user = await _remoteDataSource.signUpWithEmail(name, email, password);
+      return Right(user);
+    } on ServerException catch (e) {
+      return Left(AuthFailure(e.message));
+    } catch (e) {
+      return Left(AuthFailure('Erro inesperado: $e'));
+    }
+  }
+
+  @override
+  FutureEither<void> resetPassword(String email) async {
+    try {
+      await _remoteDataSource.resetPassword(email);
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(AuthFailure(e.message));
+    } catch (e) {
+      return Left(AuthFailure('Erro inesperado: $e'));
+    }
+  }
+
+  @override
+  FutureEither<UserEntity?> getCurrentUser() async {
+    try {
+      final user = await _remoteDataSource.getCurrentUser();
+      return Right(user);
+    } on ServerException catch (e) {
+      return Left(AuthFailure(e.message));
     } catch (e) {
       return Left(AuthFailure('Erro inesperado: $e'));
     }

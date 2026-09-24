@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:barber_flow/core/theme/app_colors.dart';
 import 'package:barber_flow/core/presentation/widgets/custom_text_field.dart';
 import 'package:barber_flow/core/presentation/widgets/custom_button.dart';
 import 'package:barber_flow/core/presentation/widgets/social_login_button.dart';
 import 'package:barber_flow/core/routes/app_router.dart';
+import 'package:barber_flow/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:barber_flow/features/auth/presentation/bloc/auth_event.dart';
+import 'package:barber_flow/features/auth/presentation/bloc/auth_state.dart';
 import 'package:barber_flow/features/auth/presentation/widgets/auth_header.dart';
 
 class LoginPage extends StatefulWidget {
@@ -28,16 +32,33 @@ class _LoginPageState extends State<LoginPage> {
 
   void _onLoginPressed() {
     if (_formKey.currentState?.validate() ?? false) {
-      // TODO: Disparar evento para AuthBloc
+      context.read<AuthBloc>().add(
+            SignInWithEmailEvent(
+              email: _emailController.text,
+              password: _passwordController.text,
+            ),
+          );
     }
   }
 
   void _onGoogleLoginPressed() {
-    // TODO: Disparar evento para AuthBloc (Google Sign In)
+    context.read<AuthBloc>().add(const SignInWithGoogleEvent());
   }
 
   void _navigateToRegister() {
     Navigator.pushNamed(context, AppRouter.register);
+  }
+
+  void _showSnackBar(String message, {bool isError = true}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: isError ? Colors.red.shade700 : Colors.green.shade700,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        margin: const EdgeInsets.all(16),
+      ),
+    );
   }
 
   @override
@@ -47,20 +68,30 @@ class _LoginPageState extends State<LoginPage> {
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
-      child: Scaffold(
-        body: Stack(
-          children: [
-            AuthHeader(height: heroHeight),
-            SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
-              child: Column(
-                children: [
-                  SizedBox(height: heroHeight - 30),
-                  _buildFormCard(screenHeight),
-                ],
+      child: BlocListener<AuthBloc, AuthState>(
+        listener: (context, state) {
+          if (state is AuthSuccess) {
+            // TODO: Navegar para Home quando existir
+            _showSnackBar('Bem-vindo, ${state.user.name}!', isError: false);
+          } else if (state is AuthError) {
+            _showSnackBar(state.message);
+          }
+        },
+        child: Scaffold(
+          body: Stack(
+            children: [
+              AuthHeader(height: heroHeight),
+              SingleChildScrollView(
+                physics: const ClampingScrollPhysics(),
+                child: Column(
+                  children: [
+                    SizedBox(height: heroHeight - 30),
+                    _buildFormCard(screenHeight),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -149,7 +180,14 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             const SizedBox(height: 20),
-            CustomButton(text: 'Entrar', onPressed: _onLoginPressed),
+            BlocBuilder<AuthBloc, AuthState>(
+              builder: (context, state) {
+                return CustomButton(
+                  text: state is AuthLoading ? 'Entrando...' : 'Entrar',
+                  onPressed: state is AuthLoading ? null : _onLoginPressed,
+                );
+              },
+            ),
             const SizedBox(height: 28),
             Row(
               children: [
