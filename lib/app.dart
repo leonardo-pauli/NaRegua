@@ -13,8 +13,9 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.light,
       onGenerateRoute: AppRouter.onGenerateRoute,
-      initialRoute: AppRouter.splash,
+      initialRoute: AppRouter.login,
     );
   }
 }
