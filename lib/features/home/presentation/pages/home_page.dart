@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:barber_flow/features/home/presentation/widgets/barber_card.dart';
+import 'package:barber_flow/features/home/presentation/widgets/filter_overlay.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -136,14 +137,17 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 16),
-                    Container(
-                      height: 52,
-                      width: 52,
-                      decoration: BoxDecoration(
-                        color: primaryColor,
-                        borderRadius: BorderRadius.circular(12),
+                    GestureDetector(
+                      onTap: () => FilterOverlay.show(context),
+                      child: Container(
+                        height: 52,
+                        width: 52,
+                        decoration: BoxDecoration(
+                          color: primaryColor,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const Icon(Icons.tune, color: Colors.white),
                       ),
-                      child: const Icon(Icons.tune, color: Colors.white),
                     ),
                   ],
                 ),
