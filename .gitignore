@@ -56,3 +56,8 @@ app.*.map.json
 *.config.dart
 *.g.dart
 *.freezed.dart
+
+# Agent and AI Tooling
+.agents/
+.superpowers/
+SKILLS/
