@@ -49,11 +49,11 @@ class ProfilePage extends StatelessWidget {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
-            label: 'Home',
+            label: 'Início',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_today_outlined),
-            label: 'Booking',
+            label: 'Agendar',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat_bubble_outline),
@@ -61,7 +61,7 @@ class ProfilePage extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Profile',
+            label: 'Perfil',
           ),
         ],
       ),
@@ -84,7 +84,7 @@ class ProfilePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const Text(
-            'Profile',
+            'Perfil',
             style: TextStyle(
               color: AppColors.white,
               fontSize: 20,
@@ -227,7 +227,7 @@ class ProfilePage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Setting',
+                'Configurações',
                 style: TextStyle(
                   color: AppColors.textGray,
                   fontSize: 16,
@@ -236,7 +236,7 @@ class ProfilePage extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               _buildSettingTile(
-                title: 'Notification',
+                title: 'Notificações',
                 trailing: Switch(
                   value: true,
                   onChanged: (val) {},
@@ -246,24 +246,24 @@ class ProfilePage extends StatelessWidget {
               ),
               const Divider(height: 1),
               _buildSettingTile(
-                title: 'Account',
+                title: 'Conta',
               ),
               const Divider(height: 1),
               _buildSettingTile(
-                title: 'Security',
+                title: 'Segurança',
               ),
               const Divider(height: 1),
               _buildSettingTile(
-                title: 'Help',
+                title: 'Ajuda',
               ),
               const Divider(height: 1),
               _buildSettingTile(
-                title: 'About',
+                title: 'Sobre',
               ),
               const Divider(height: 1),
               const SizedBox(height: 32),
               CustomButton(
-                text: 'Log out',
+                text: 'Sair',
                 onPressed: () {
                   context.read<AuthBloc>().add(const SignOutEvent());
                 },

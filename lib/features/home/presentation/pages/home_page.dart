@@ -8,6 +8,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const primaryColor = Color(0xFF322C5C);
+    final bool hasActiveBooking = true; // Flag para alternar entre o banner promocional e o card de agendamento
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -57,61 +58,11 @@ class HomePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
                 
-                // Banner
-                Container(
-                  width: double.infinity,
-                  height: 180,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFF9900),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      // Placeholder for banner background pattern and image
-                      Positioned(
-                        right: 0,
-                        bottom: 0,
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.only(bottomRight: Radius.circular(20)),
-                          child: Image.network(
-                            'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?q=80&w=300&auto=format&fit=crop',
-                            height: 180,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 16,
-                        left: 16,
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: const Icon(Icons.content_cut, color: Colors.white),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 16,
-                        left: 16,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: primaryColor,
-                            minimumSize: Size.zero,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            elevation: 0,
-                          ),
-                          child: const Text('Booking Now', style: TextStyle(color: Colors.white)),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                // Banner or Booked Card
+                if (hasActiveBooking)
+                  _buildBookedCard(context)
+                else
+                  _buildPromoBanner(primaryColor),
                 
                 const SizedBox(height: 24),
                 
@@ -127,7 +78,7 @@ class HomePage extends StatelessWidget {
                         ),
                         child: const TextField(
                           decoration: InputDecoration(
-                            hintText: "Search barber's, haircut ser...",
+                            hintText: 'Buscar barbeiros, serviços...',
                             hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
                             prefixIcon: Icon(Icons.search, color: Colors.grey),
                             border: InputBorder.none,
@@ -156,7 +107,7 @@ class HomePage extends StatelessWidget {
                 
                 // Nearest Babershop
                 const Text(
-                  'Nearest Babershop',
+                  'Barbearias Próximas',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -224,7 +175,7 @@ class HomePage extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: const [
-                        Text('See All', style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text('Ver Todos', style: TextStyle(fontWeight: FontWeight.bold)),
                         SizedBox(width: 8),
                         Icon(Icons.arrow_outward, size: 18),
                       ],
@@ -236,7 +187,7 @@ class HomePage extends StatelessWidget {
                 
                 // Most recommended
                 const Text(
-                  'Most recommended',
+                  'Mais Recomendadas',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -279,7 +230,7 @@ class HomePage extends StatelessWidget {
                               child: Row(
                                 children: const [
                                   Text(
-                                    'Booking',
+                                    'Agendar',
                                     style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                                   ),
                                   SizedBox(width: 8),
@@ -335,7 +286,7 @@ class HomePage extends StatelessWidget {
                 
                 // Find a barber nearby
                 const Text(
-                  'Find a barber nearby',
+                  'Encontrar barbeiro próximo',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -373,7 +324,7 @@ class HomePage extends StatelessWidget {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: const [
-                              Text('Find now', style: TextStyle(color: Colors.white)),
+                              Text('Buscar agora', style: TextStyle(color: Colors.white)),
                               SizedBox(width: 8),
                               Icon(Icons.search, color: Colors.white, size: 18),
                             ],
@@ -405,11 +356,11 @@ class HomePage extends StatelessWidget {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Início',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_today),
-            label: 'Booking',
+            label: 'Agendar',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat_bubble_outline),
@@ -417,7 +368,215 @@ class HomePage extends StatelessWidget {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),
-            label: 'Profile',
+            label: 'Perfil',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPromoBanner(Color primaryColor) {
+    return Container(
+      width: double.infinity,
+      height: 180,
+      decoration: BoxDecoration(
+        color: const Color(0xFFFF9900),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Positioned(
+            right: 0,
+            bottom: 0,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(bottomRight: Radius.circular(20)),
+              child: Image.network(
+                'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?q=80&w=300&auto=format&fit=crop',
+                height: 180,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Positioned(
+            top: 16,
+            left: 16,
+            child: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(Icons.content_cut, color: Colors.white),
+            ),
+          ),
+          Positioned(
+            bottom: 16,
+            left: 16,
+            child: ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: primaryColor,
+                minimumSize: Size.zero,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                elevation: 0,
+              ),
+              child: const Text('Agendar Agora', style: TextStyle(color: Colors.white)),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBookedCard(BuildContext context) {
+    const primaryColor = Color(0xFF322C5C);
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: primaryColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Stack(
+        children: [
+          // Background Pattern (subtle icons)
+          Positioned.fill(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Opacity(
+                opacity: 0.05,
+                child: GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 6,
+                  ),
+                  itemCount: 24,
+                  itemBuilder: (context, index) {
+                    final icons = [Icons.content_cut, Icons.brush, Icons.air, Icons.face];
+                    return Icon(
+                      icons[index % icons.length],
+                      color: Colors.white,
+                      size: 24,
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+          // Content
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Varcity\nBarbershop Jogja\nex The Varcher',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              height: 1.2,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Row(
+                            children: [
+                              Icon(Icons.location_on, color: Colors.grey[400], size: 16),
+                              const SizedBox(width: 4),
+                              Text(
+                                'Condongcatur (10 km)',
+                                style: TextStyle(
+                                  color: Colors.grey[400],
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        const Icon(Icons.place, color: Colors.blue, size: 28), // Map pin placeholder
+                        const SizedBox(height: 4),
+                        Text(
+                          'Mapa',
+                          style: TextStyle(
+                            color: Colors.grey[300],
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Divider(color: Colors.white.withValues(alpha: 0.2), height: 1),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Horário marcado',
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                            fontSize: 12,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Row(
+                          children: const [
+                            Icon(Icons.calendar_month, color: Colors.white, size: 16),
+                            SizedBox(width: 6),
+                            Text(
+                              '15 Jan, 08 : 00 AM',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          'Tempo estimado',
+                          style: TextStyle(
+                            color: Colors.grey[400],
+                            fontSize: 12,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        const Text(
+                          '-50 min',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),

@@ -12,12 +12,12 @@ class ExploreBarbersPage extends StatefulWidget {
 
 class _ExploreBarbersPageState extends State<ExploreBarbersPage> {
   final List<String> categories = [
-    'All Service',
-    'Basic haircut',
-    'Coloring',
-    'Treatment',
+    'Todos os serviços',
+    'Corte básico',
+    'Coloração',
+    'Tratamento',
   ];
-  String selectedCategory = 'All Service';
+  String selectedCategory = 'Todos os serviços';
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class _ExploreBarbersPageState extends State<ExploreBarbersPage> {
           onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
-          'Explore Barbers',
+          'Explorar Barbearias',
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
@@ -101,7 +101,7 @@ class _ExploreBarbersPageState extends State<ExploreBarbersPage> {
                       child: Row(
                         children: const [
                           Text(
-                            'Booking',
+                            'Agendar',
                             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                           ),
                           SizedBox(width: 8),
@@ -182,7 +182,7 @@ class _ExploreBarbersPageState extends State<ExploreBarbersPage> {
             ),
             child: const TextField(
               decoration: InputDecoration(
-                hintText: "Search barber's, haircut ser...",
+                hintText: 'Buscar barbeiros, serviços...',
                 hintStyle: TextStyle(color: Colors.grey, fontSize: 14),
                 prefixIcon: Icon(Icons.search, color: Colors.grey),
                 border: InputBorder.none,

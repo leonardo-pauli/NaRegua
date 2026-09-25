@@ -20,13 +20,13 @@ class FilterOverlay extends StatefulWidget {
 
 class _FilterOverlayState extends State<FilterOverlay> {
   final List<String> categories = [
-    'Basic haircut',
-    'Coloring',
-    'Treatment',
-    'Massage',
-    'Kids haircut',
+    'Corte básico',
+    'Coloração',
+    'Tratamento',
+    'Massagem',
+    'Corte infantil',
   ];
-  String selectedCategory = 'Basic haircut';
+  String selectedCategory = 'Corte básico';
   double rating = 4.0;
   
   final TextEditingController _minDistanceController = TextEditingController(text: '0.1');
@@ -71,7 +71,7 @@ class _FilterOverlayState extends State<FilterOverlay> {
             _buildDistance(),
             const SizedBox(height: 40),
             CustomButton(
-              text: 'Apply',
+              text: 'Aplicar',
               onPressed: () {
                 Navigator.pop(context);
               },
@@ -98,7 +98,7 @@ class _FilterOverlayState extends State<FilterOverlay> {
             ),
             const SizedBox(width: 16),
             const Text(
-              'Filter',
+              'Filtro',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -127,7 +127,7 @@ class _FilterOverlayState extends State<FilterOverlay> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'General Category',
+          'Categoria Geral',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
@@ -177,7 +177,7 @@ class _FilterOverlayState extends State<FilterOverlay> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Rating Barber',
+          'Avaliação',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
@@ -237,7 +237,7 @@ class _FilterOverlayState extends State<FilterOverlay> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Distance',
+          'Distância',
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
@@ -247,7 +247,7 @@ class _FilterOverlayState extends State<FilterOverlay> {
         const SizedBox(height: 16),
         Row(
           children: [
-            _buildDistanceInput('Nearest', _minDistanceController),
+            _buildDistanceInput('Mínima', _minDistanceController),
             const SizedBox(width: 16),
             const Text(
               '-',
@@ -258,7 +258,7 @@ class _FilterOverlayState extends State<FilterOverlay> {
               ),
             ),
             const SizedBox(width: 16),
-            _buildDistanceInput('Farthest', _maxDistanceController),
+            _buildDistanceInput('Máxima', _maxDistanceController),
           ],
         ),
       ],
