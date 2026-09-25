@@ -210,7 +210,9 @@ class HomePage extends StatelessWidget {
                 // See All
                 Center(
                   child: OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/explore_barbers');
+                    },
                     style: OutlinedButton.styleFrom(
                       foregroundColor: primaryColor,
                       side: const BorderSide(color: primaryColor),
