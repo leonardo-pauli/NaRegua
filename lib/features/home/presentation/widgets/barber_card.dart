@@ -18,8 +18,12 @@ class BarberCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, '/barber_detail');
+      },
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Image
         ClipRRect(
@@ -88,6 +92,7 @@ class BarberCard extends StatelessWidget {
           ),
         ),
       ],
+      ),
     );
   }
 }

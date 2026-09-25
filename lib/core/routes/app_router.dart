@@ -5,6 +5,7 @@ import 'package:barber_flow/features/auth/presentation/pages/forgot_password_pag
 import 'package:barber_flow/features/auth/presentation/pages/authentication_page.dart';
 import 'package:barber_flow/features/home/presentation/pages/home_page.dart';
 import 'package:barber_flow/features/home/presentation/pages/explore_barbers_page.dart';
+import 'package:barber_flow/features/home/presentation/pages/barber_detail_page.dart';
 import 'package:barber_flow/features/profile/presentation/pages/profile_page.dart';
 
 class AppRouter {
@@ -20,6 +21,7 @@ class AppRouter {
   static const String authentication = '/authentication';
   static const String home = '/home';
   static const String exploreBarbers = '/explore_barbers';
+  static const String barberDetail = '/barber_detail';
   static const String profile = '/profile';
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
@@ -36,6 +38,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const HomePage());
       case exploreBarbers:
         return MaterialPageRoute(builder: (_) => const ExploreBarbersPage());
+      case barberDetail:
+        return MaterialPageRoute(builder: (_) => const BarberDetailPage());
       case profile:
         return MaterialPageRoute(builder: (_) => const ProfilePage());
       // Outras rotas serão adicionadas conforme features forem implementadas
