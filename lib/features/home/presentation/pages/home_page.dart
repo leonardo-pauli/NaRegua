@@ -391,6 +391,11 @@ class HomePage extends StatelessWidget {
         showUnselectedLabels: true,
         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
         unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal, fontSize: 12),
+        onTap: (index) {
+          if (index == 3) {
+            Navigator.pushReplacementNamed(context, '/profile');
+          }
+        },
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
