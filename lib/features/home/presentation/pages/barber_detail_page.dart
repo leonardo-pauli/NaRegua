@@ -212,18 +212,30 @@ class _BarberDetailPageState extends State<BarberDetailPage> {
         color: AppColors.darkNavy.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            _buildTabItem(0, Icons.info_outline, 'Sobre'),
-            _buildTabSeparator(),
-            _buildTabItem(1, Icons.content_cut, 'Serviços'),
-            _buildTabSeparator(),
-            _buildTabItem(2, Icons.calendar_month, 'Horários'),
-            _buildTabSeparator(),
-            _buildTabItem(3, Icons.star_outline, 'Avaliações'),
-          ],
+      child: ShaderMask(
+        shaderCallback: (Rect bounds) {
+          return const LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: [Colors.black, Colors.black, Colors.transparent],
+            stops: [0.0, 0.85, 1.0], // Começa a sumir nos últimos 15%
+          ).createShader(bounds);
+        },
+        blendMode: BlendMode.dstIn,
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: [
+              _buildTabItem(0, Icons.info_outline, 'Sobre'),
+              _buildTabSeparator(),
+              _buildTabItem(1, Icons.content_cut, 'Serviços'),
+              _buildTabSeparator(),
+              _buildTabItem(2, Icons.calendar_month, 'Horários'),
+              _buildTabSeparator(),
+              _buildTabItem(3, Icons.star_outline, 'Avaliações'),
+              const SizedBox(width: 16), // Espaço extra para o último item passar da máscara
+            ],
+          ),
         ),
       ),
     );
