@@ -49,8 +49,10 @@ app.*.map.json
 .env.*
 !.env.example
 **/google-services.json
+**/google-services-backup.json
 **/GoogleService-Info.plist
 **/firebase_options.dart
+firebase.json
 
 # Generated files
 *.config.dart
