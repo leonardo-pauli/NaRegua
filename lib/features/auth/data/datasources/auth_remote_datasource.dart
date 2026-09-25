@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:barber_flow/core/constants/app_constants.dart';
 import 'package:barber_flow/core/error/exceptions.dart';
 import 'package:barber_flow/features/auth/data/models/user_model.dart';
@@ -30,24 +31,37 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<UserModel> signInWithGoogle() async {
     try {
-      // google_sign_in v7 API: authenticate() retorna GoogleSignInAccount
-      // e lança GoogleSignInException em caso de erro/cancelamento
-      final googleUser = await _googleSignIn.authenticate();
+      User? user;
+      
+      if (kIsWeb) {
+        final googleProvider = GoogleAuthProvider();
+        final userCredential = await _firebaseAuth.signInWithPopup(googleProvider);
+        user = userCredential.user;
+      } else {
+        // google_sign_in v7 API: authenticate() retorna GoogleSignInAccount
+        // e lança GoogleSignInException em caso de erro/cancelamento
+        final googleUser = await _googleSignIn.authenticate();
+        
+        if (googleUser == null) {
+          throw const ServerException('Login com Google cancelado pelo usuário');
+        }
 
-      final googleAuth = googleUser.authentication;
-      final credential = GoogleAuthProvider.credential(
-        idToken: googleAuth.idToken,
-      );
+        final googleAuth = await googleUser.authentication;
+        final credential = GoogleAuthProvider.credential(
+          idToken: googleAuth.idToken,
+        );
 
-      final userCredential = await _firebaseAuth.signInWithCredential(credential);
-      final user = userCredential.user;
+        final userCredential = await _firebaseAuth.signInWithCredential(credential);
+        user = userCredential.user;
+      }
 
       if (user == null) {
         throw const ServerException('Usuário não encontrado após login');
       }
 
       final userModel = UserModel.fromFirebaseUser(user);
-      await _saveUserToFirestore(userModel);
+      // Salva no background para não travar a tela de "Entrando..." na web
+      _saveUserToFirestore(userModel);
 
       return userModel;
     } on ServerException {

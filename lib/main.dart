@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:barber_flow/app.dart';
@@ -10,21 +11,34 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Load envs
-  await dotenv.load(fileName: ".env");
+  try {
+    await dotenv.load(fileName: ".env");
+  } catch (e) {
+    debugPrint("Failed to load .env file: $e");
+  }
 
   // Dependency Injection
   configureDependencies();
 
   // Initialize Firebase
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  if (Firebase.apps.isEmpty) {
+    if (kIsWeb) {
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+    } else {
+      await Firebase.initializeApp();
+    }
+  }
 
   // Initialize Google Sign-In with Web Client ID
-  await GoogleSignIn.instance.initialize(
-    serverClientId:
-        '675712429250-25i2j1ph0ignjvbuuutjf9u8tpdsrpa0.apps.googleusercontent.com',
-  );
+  try {
+    await GoogleSignIn.instance.initialize(
+      serverClientId: '675712429250-25i2j1ph0ignjvbuuutjf9u8tpdsrpa0.apps.googleusercontent.com',
+    );
+  } catch (e) {
+    debugPrint("Failed to initialize GoogleSignIn: $e");
+  }
 
   runApp(const App());
 }

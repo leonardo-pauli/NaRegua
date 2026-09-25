@@ -3,9 +3,12 @@ import 'package:barber_flow/features/auth/presentation/pages/login_page.dart';
 import 'package:barber_flow/features/auth/presentation/pages/register_page.dart';
 import 'package:barber_flow/features/auth/presentation/pages/forgot_password_page.dart';
 import 'package:barber_flow/features/auth/presentation/pages/authentication_page.dart';
+import 'package:barber_flow/features/home/presentation/pages/home_page.dart';
 
 class AppRouter {
   AppRouter._();
+
+  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   // Route names
   static const String splash = '/';
@@ -25,6 +28,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const ForgotPasswordPage());
       case authentication:
         return MaterialPageRoute(builder: (_) => const AuthenticationPage());
+      case home:
+        return MaterialPageRoute(builder: (_) => const HomePage());
       // Outras rotas serão adicionadas conforme features forem implementadas
       default:
         return MaterialPageRoute(

@@ -19,10 +19,14 @@ class App extends StatelessWidget {
         listenWhen: (previous, current) =>
             current is AuthSuccess || current is AuthUnauthenticated,
         listener: (context, state) {
-          // Navegação global baseada no estado de auth
-          // Será útil quando tivermos a Home page
+          if (state is AuthSuccess) {
+            AppRouter.navigatorKey.currentState?.pushNamedAndRemoveUntil(AppRouter.home, (route) => false);
+          } else if (state is AuthUnauthenticated) {
+            AppRouter.navigatorKey.currentState?.pushNamedAndRemoveUntil(AppRouter.login, (route) => false);
+          }
         },
         child: MaterialApp(
+          navigatorKey: AppRouter.navigatorKey,
           title: AppConstants.appName,
           debugShowCheckedModeBanner: false,
           theme: AppTheme.lightTheme,
